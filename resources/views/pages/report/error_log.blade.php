@@ -12,15 +12,15 @@
 	<div class="card-body">
 		<div class="table-responsive" >
 			<table class="table table-hover" id="kt_datatable">
-				<thead >
+				<thead style="color:#d2dde9;">
 					<tr>
 						<th >Date</th>
 						<th style="width:100px;">Description</th>
-						<th >Type</th>
+						<th >URL</th>
 						<th >Detail</th>
 					</tr>
 				</thead>
-				<tbody style="color:white;">
+				<tbody style="color:#d2dde9;">
 				</tbody>
 			</table>
 		</div>
@@ -46,7 +46,7 @@
                     columns: [
                         {data: 'created_at',orderable: true, searchable: true},
                         {data: 'description',orderable: true, searchable: true},
-                        {data: 'request_via',orderable: true, searchable: true},
+                        {data: 'url',orderable: true, searchable: true},
                         {data: 'error',orderable: true, searchable: true},
                     ]
                 });

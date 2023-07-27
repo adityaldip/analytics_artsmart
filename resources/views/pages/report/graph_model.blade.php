@@ -39,7 +39,7 @@
                     data: {
                         labels: label, // Replace with your labels
                         datasets: [{
-                            label: 'Models',
+                            label: 'Models Count',
                             data: dataModel,
                             backgroundColor: '#3e7ee6', // Customize the color
                             barThickness: 20

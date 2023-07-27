@@ -5,7 +5,7 @@
       <div class="position-relative card-body">
         <div class="row">
           <div class="col-lg-8">
-            <h3 class="mb-0">Analysis Reports</h3>
+            <h3 class="mb-0" style="color:#d2dde9;">Analysis Reports</h3>
           </div>
         </div>
       </div>
@@ -22,5 +22,6 @@
       <script type="text/javascript" src="https://artsmart.ai/assets/js/graph2.js?v=21072301"></script>
   @include('pages.report.graph_model') 
   @include('pages.report.graph_feature') 
+  @include('pages.report.error_graph') 
   @include('pages.report.error_log') 
   @endsection

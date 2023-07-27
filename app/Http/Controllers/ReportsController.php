@@ -25,8 +25,7 @@ class ReportsController extends Controller
             }else{
                 $model = DB::table('generate')
                 ->join('playground_generate', 'generate.id', '=', 'playground_generate.generate_id')
-                ->join('plugin_sort', 'playground_generate.plugin_sort', '=', 'plugin_sort.id')
-                ->select("request_via", "predict_time","error","generate.created_at","playground_generate.diffusion_mode","plugin_sort.name")->where("status",'failed')->orderBy('generate.created_at','desc')->get(); 
+                ->select("request_via", "predict_time","error","generate.created_at","playground_generate.diffusion_mode","generate.url")->where("status",'failed')->orderBy('generate.created_at','desc')->get(); 
                 Cache::remember('generate_error_data', 3600, function () use ($model){
                     return $model;
                 });
@@ -34,7 +33,7 @@ class ReportsController extends Controller
             $data = datatables()->of($model)
             ->addColumn('description', function ($pasien) {
                 $html = "<ul>";
-                $html .= "<li> Action:".$pasien->name."</li>";
+                $html .= "<li> Action:</li>";
                 $html .= "<li> Via:".$pasien->request_via."</li>";
                 $html .= "<li> Model:".$pasien->diffusion_mode."</li>";
                 $html .= "<li> time:".$pasien->predict_time."</li>";
@@ -68,13 +67,28 @@ class ReportsController extends Controller
             $model = Cache::get("generate_graph_feature_data");
         }else{
             $model = DB::table('playground_generate')
-            ->selectRaw("plugin_sort.name, count(*) as total")
-            ->join('plugin_sort', 'playground_generate.plugin_sort', '=', 'plugin_sort.id')
-            ->groupBy('plugin_sort.name')->get(); 
+            ->selectRaw("plugin_sort, count(*) as total")
+            ->groupBy('plugin_sort')->get(); 
             Cache::remember('generate_graph_feature_data', 3600, function () use ($model){
                 return $model;
             });
         }
         return response()->json($model);
+    }
+
+    public function errorData()
+    {
+        if(Cache::has("generate_graph_error_data")) {
+            $modelError = Cache::get("generate_graph_error_data");
+        }else{
+            $modelError = DB::table('generate')
+            ->selectRaw("date(created_at) as date, count(*) as total")
+            ->where('status','failed')
+            ->groupByRaw("date(created_at)")->orderByRaw("date(created_at)")->get(); 
+            Cache::remember('generate_graph_error_data', 3600, function () use ($modelError){
+                return $modelError;
+            });
+        }
+        return response()->json($modelError);
     }
 }

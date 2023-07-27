@@ -31,7 +31,7 @@
             
             function createChart(data) {
                 const dataModel = data.map(item => item.total);
-                const label = data.map(item => item.name);
+                const label = data.map(item => item.plugin_sort);
 
                 var ctx = document.getElementById('feature').getContext('2d');
                 var myChart = new Chart(ctx, {
@@ -39,7 +39,7 @@
                     data: {
                         labels: label, // Replace with your labels
                         datasets: [{
-                            label: 'Features',
+                            label: 'Features Count',
                             data: dataModel,
                             backgroundColor: '#3e7ee6', // Customize the color
                             barThickness: 20
